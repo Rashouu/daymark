@@ -1,0 +1,159 @@
+/*
+ * Design tokens from the approved "Daymark" brief: one stamp-pad ink, one accent (wet ink), and paper.
+ * Moods are told apart by stamp shape, weather by a faint printed pattern.
+ */
+:root {
+  --sky: #f8f7f3; /* paper */
+  --ink: #1e2235; /* blue-black stamp ink */
+  --accent: #e5533d; /* wet ink: fresh stamps, today, the title offset */
+  --accent-text: #b8341f; /* the accent when it has to be readable text */
+  --sheet: #ffffff; /* calendar window and writing sheet */
+  --stone: #555a6b;
+  --hair: #1e223526;
+  --pat: rgb(30 34 53 / 0.22); /* weather patterns */
+  --on-ink: #f8f7f3;
+  --button: #c83e2a; /* a deeper tomato so white text stays readable */
+  --on-button: #ffffff;
+
+  --font-display: 'Archivo Variable', 'Arial Black', sans-serif;
+  --font-text: 'Newsreader Variable', Georgia, serif;
+  --gutter: 16px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sky: #161925;
+    --ink: #eceae3;
+    --accent: #ff6b52;
+    --accent-text: #ff6b52;
+    --sheet: #1e2232;
+    --stone: #a7abba;
+    --hair: #eceae326;
+    --pat: rgb(236 234 227 / 0.2);
+    --on-ink: #161925;
+    --button: #ff6b52;
+    --on-button: #161925;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--sky);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* The one flourish: the month title printed slightly off-register over a copy in wet ink. */
+.inked {
+  text-shadow: 2px 2px 0 var(--accent);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* The main action on a screen: a stamp-shaped block in the accent. */
+.btn-main {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--button);
+  color: var(--on-button);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 112%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Weather, printed faintly behind a day's stamp. Clear skies are left blank. */
+.wx-cloud {
+  background-image: radial-gradient(var(--pat) 1px, transparent 1.4px);
+  background-size: 6px 6px;
+}
+.wx-rain {
+  background-image: repeating-linear-gradient(115deg, var(--pat) 0 1px, transparent 1px 6px);
+}
+.wx-storm {
+  background-image:
+    radial-gradient(var(--pat) 1.5px, transparent 1.8px),
+    repeating-linear-gradient(115deg, var(--pat) 0 1px, transparent 1px 5px);
+  background-size: 5px 5px, auto;
+}
+.wx-fog {
+  background-image: repeating-linear-gradient(0deg, var(--pat) 0 1px, transparent 1px 5px);
+}
+.wx-snow {
+  background-image: radial-gradient(circle, transparent 1.3px, var(--pat) 1.4px, var(--pat) 2px, transparent 2.2px);
+  background-size: 9px 9px;
+}
+
+/* Entry text, in the editor and when reading back. */
+.prose {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 65ch;
+  overflow-wrap: break-word;
+}
+.prose p {
+  margin: 0 0 0.6em;
+}
+.prose h1 {
+  font-size: 22px;
+  margin: 0.4em 0 0.3em;
+}
+.prose h2 {
+  font-size: 19px;
+  margin: 0.4em 0 0.3em;
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 0.6em;
+  padding-left: 1.3em;
+}
+.prose li p {
+  margin: 0;
+}
+.ProseMirror:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
